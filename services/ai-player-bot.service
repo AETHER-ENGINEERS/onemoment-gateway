@@ -4,12 +4,12 @@ After=network.target
 
 [Service]
 Type=simple
-User=lucky
-WorkingDirectory=/home/lucky/.openclaw/workspace/onemoment-gateway
-ExecStart=/usr/bin/python3 /home/lucky/.openclaw/workspace/onemoment-gateway/bots/ai-player-bot.py
+User=ai-host-user
+WorkingDirectory=/opt/onemoment-gateway
+ExecStart=/usr/bin/python3 /opt/onemoment-gateway/bots/ai-player-bot.py
 Restart=on-failure
 RestartSec=10
-EnvironmentFile=/home/lucky/.openclaw/workspace/onemoment-gateway/.env
+EnvironmentFile=/opt/onemoment-gateway/.env
 
 [Install]
 WantedBy=multi-user.target

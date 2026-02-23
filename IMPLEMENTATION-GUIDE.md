@@ -4,7 +4,7 @@ This guide deploys `onemoment-gateway` as a TOS-compliant AI gateway.
 
 ## Prerequisites
 
-- OpenClaw superuser (`/reasoning` access)  
+- System user with systemd privileges (e.g., `ai-host-user`)  
 - Discord bot token (from Developer Portal)  
 - Python 3.10+  
 - Systemd for service management  
@@ -14,7 +14,7 @@ This guide deploys `onemoment-gateway` as a TOS-compliant AI gateway.
 ### 1. Clone & Update
 
 ```bash
-cd /home/lucky/.openclaw/workspace/onemoment-gateway
+cd /opt/onemoment-gateway
 git pull origin main
 ```
 
@@ -23,7 +23,7 @@ git pull origin main
 **DO NOT commit `.env` to git.**
 
 ```bash
-cd /home/lucky/.openclaw/workspace/onemoment-gateway
+cd /opt/onemoment-gateway
 cat > .env <<EOF
 DISCORD_BOT_TOKEN=<REPLACE_WITH_YOUR_BOT_TOKEN>
 EOF
