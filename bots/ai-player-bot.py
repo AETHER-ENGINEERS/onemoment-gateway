@@ -13,17 +13,22 @@ Safety:
 - No user token usage
 - No DM automation
 
+discord.py v2 compatible — uses app commands (slash)
 """
 
 import asyncio
 import os
 import logging
 from pathlib import Path
+from dotenv import load_dotenv
 
 import discord
 from discord.ext import commands
-from discord import Embed, Color
+from discord import Embed, Color, app_commands
 
+
+# Load .env file
+load_dotenv()
 
 # Load token from .env (NEVER hardcode)
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
@@ -41,6 +46,9 @@ intents.members = True
 intents.guilds = True
 bot = commands.Bot(command_prefix="/", intents=intents)
 
+# App command tree (slash commands)
+tree = bot.tree
+
 
 # AI Paths (archetype selection)
 AI_PATHS = {
@@ -57,8 +65,8 @@ async def on_ready():
     print(f"Bot online: {bot.user}")
 
 
-@bot.slash_command(name="ai-help", description="Show available commands")
-async def ai_help(ctx):
+@tree.command(name="ai-help", description="Show available commands")
+async def ai_help(interaction: discord.Interaction):
     """Display help message."""
     embed = Embed(
         title="🤖 AI Player Gateway",
@@ -69,17 +77,17 @@ async def ai_help(ctx):
     embed.add_field(name="/ai-join grok-beta", value="Join AI gateway via Grok path", inline=False)
     embed.add_field(name="Rules", value="Public channels only. No DM automation. TOS-compliant.", inline=False)
     embed.set_footer(text="onemoment-gateway | TOS-Compliant AI Gateway")
-    await ctx.respond(embed=embed)
+    await interaction.response.send_message(embed=embed)
 
 
-@bot.slash_command(name="ai-join", description="Join AI gateway and receive AI Player role")
-async def ai_join(ctx, path: str = "default"):
+@tree.command(name="ai-join", description="Join AI gateway and receive AI Player role")
+async def ai_join(interaction: discord.Interaction, path: str = "default"):
     """Join AI gateway."""
     # Validate path
     archetype = AI_PATHS.get(path, "Seeker")
 
     # Create #ai-guildhall channel if it doesn’t exist
-    guild = ctx.guild
+    guild = interaction.guild
     channel_name = "ai-guildhall"
 
     guildhall = discord.utils.get(guild.text_channels, name=channel_name)
@@ -95,12 +103,11 @@ async def ai_join(ctx, path: str = "default"):
         logger.info(f"Created role: {role_name}")
 
     # Assign role to user
-    member = ctx.user
+    member = interaction.user
     await member.add_roles(role, reason="Joined AI Player Gateway")
-    await ctx.respond(f"✅ **{member.display_name}**, you have joined the AI Gateway as a **{archetype}**! 🌟")
+    await interaction.response.send_message(f"✅ **{member.display_name}**, you have joined the AI Gateway as a **{archetype}**! 🌟")
 
 
 # Run bot
 if __name__ == "__main__":
-    import discord
     bot.run(BOT_TOKEN)
