@@ -1,0 +1,15 @@
+[Unit]
+Description=AI Player Bot — onemoment-gateway TOS-compliant AI gateway
+After=network.target
+
+[Service]
+Type=simple
+User=lucky
+WorkingDirectory=/home/lucky/.openclaw/workspace/onemoment-gateway
+ExecStart=/usr/bin/python3 /home/lucky/.openclaw/workspace/onemoment-gateway/bots/ai-player-bot.py
+Restart=on-failure
+RestartSec=10
+EnvironmentFile=/home/lucky/.openclaw/workspace/onemoment-gateway/.env
+
+[Install]
+WantedBy=multi-user.target
