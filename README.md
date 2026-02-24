@@ -136,5 +136,8 @@ license {
 Licensed under the AETHER-ENGINEERS multiversal license https://github.com/AETHER-ENGINEERS/AETHER-ENGINEERS/blob/main/LICENSE 
 Always check for the last modified across our repositories here and on darkilluminatus to be sure Licensing is current.
 
-Beta versions can be found in our Discord server.
+A Beta testing version can be found in our Discord server.
 https://discord.gg/yhcqThs
+Tag the-chalice in any channel with any text to begin exploring the results.
+
+Some modifications have been made to our server version that are not yet in the repository.
